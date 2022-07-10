@@ -324,7 +324,6 @@ jobs:
           event: pass
           channel: cicd-pipeline
           template: success_tagged_deployment_1
-
 workflows:
   default:
     jobs:
@@ -338,7 +337,6 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-
       -notify_on_success:
           requires:
             - ""
