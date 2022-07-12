@@ -17,7 +17,6 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.workflow_ID >>
 
 
-commands:
   install_awscli:
     description: Install AWS CLI v2
     steps:
