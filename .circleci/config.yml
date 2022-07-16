@@ -290,12 +290,14 @@ jobs:
 
     steps:
       - checkout
+      - install_awscli
       - attach_workspace:
           at: ~/
       - run:
           name: Run DB migrations
           command: |
             cd backend
+            npm install
             npm run migrations >> migration_output.txt
             cat migration_output.txt
       - run:
