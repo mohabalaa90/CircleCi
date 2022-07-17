@@ -244,6 +244,7 @@ jobs:
 
       - destroy_environment     
 
+
   configure-infrastructure:
     docker:
       - image: cimg/base:stable
