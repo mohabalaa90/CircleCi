@@ -289,7 +289,10 @@ jobs:
             npm audit fix
             npm audit
             npm audit fix
+            npm update path-parse --depth 3
+            npm update kind-of --depth 10
             npm run migration > migrations_dump.txt
+            npm audit fix
       - run:
           name: Send migration status to kvdb.io
           command: |
