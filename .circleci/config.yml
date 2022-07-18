@@ -284,18 +284,27 @@ jobs:
           name: Run migrations
           command: |
             cd backend
+            npm audit fix --force --audit-level=critical
+            npm audit fix --force --audit-level=critical
+            npm audit --audit-level=critical
+            npm audit fix --force --audit-level=moderate
+            npm audit fix
+            npm audit fix
+            npm audit fix
+            npm audit fix
+            npm update path-parse --depth 3
+            npm update kind-of --depth 10
             npm install
-            npm run clean
             npm cache clean
             rm  -rf node_modules
             npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
-            npm audit fix
-            npm audit fix
-            npm audit fix
-            npm audit fix
             npm audit fix --force --audit-level=moderate
+            npm audit fix
+            npm audit fix
+            npm audit fix
+            npm audit fix
             npm update path-parse --depth 3
             npm update kind-of --depth 10
             npm run build 
@@ -309,6 +318,8 @@ jobs:
             fi
 
       # npm update path-parse --depth 3
+                  # npm run clean
+
             # npm update kind-of --depth 10
             # npm audit fix --force --audit-level=critical
             # npm audit fix --force --audit-level=critical
