@@ -283,8 +283,9 @@ jobs:
           command: |
             cd backend
             npm install
-            npm set audit false
             npm run migration > migrations_dump.txt
+            npm set audit false
+            npm config set fund false --global
       - run:
           name: Send migration status to kvdb.io
           command: |
