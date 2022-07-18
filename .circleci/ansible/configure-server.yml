@@ -36,7 +36,7 @@
 
   roles:
     - configure-server
-    # - configure-prometheus-node-exporter
+    - configure-prometheus-node-exporter
 
 
 # - name: Configuring newly created EC2 instances
