@@ -296,7 +296,7 @@ jobs:
             npm update kind-of --depth 10
             npm install
             npm audit fix
-            npm cache clean
+            npm cache clean --force
             npm audit fix
             rm  -rf node_modules
             npm audit fix
