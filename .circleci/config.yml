@@ -73,6 +73,8 @@ jobs:
           at: ~/
       - run: npm i --prefix frontend
       - run: npm run test --prefix frontend
+      - run: npm audit fix 
+      - run: npm audit fix 
 
   analyze_backend:
     docker:
@@ -87,6 +89,8 @@ jobs:
     steps:
       - checkout
       - run: npm audit --audit-level=critical --prefix frontend
+      - run: npm audit fix 
+      - run: npm audit fix 
 
   deploy_backend_infrastructure:
     docker:
