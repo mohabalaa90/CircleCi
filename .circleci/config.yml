@@ -469,7 +469,7 @@ jobs:
             then
               exit 1
             else
-              exit 1
+              exit 0
             fi
       - destroy_environment
       - revert-migrations 
@@ -512,10 +512,13 @@ jobs:
             export STACKS=($(aws cloudformation list-stacks \
                 --query "StackSummaries[*].StackName" \
                 --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
+            
+            export OldWorkflowID=$(aws cloudformation \
+            --list-exports --query "Exports[?Name==\'WorkflowID\'].value" \
+            --no-paginate --output text)
+            
             echo Stack names: "${STACKS[@]}"
-
-            export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
-            echo Old Workflow ID: $OldWorkflowID
+            echo Old Workflow ID: "${OldWorkflowID}"
 
             if [[ "${STACK[@]}" =~ "${OldWorkflowID}" ]]
             then
@@ -523,6 +526,9 @@ jobs:
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
+
+      #export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
+
   # cloudfront-update:
   #   docker:
   #     - image: cimg/base:stable
