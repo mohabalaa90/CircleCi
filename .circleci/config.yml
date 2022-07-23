@@ -514,8 +514,9 @@ jobs:
                 --query "StackSummaries[*].StackName" \
                 --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
             
-          
-            export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
+            export OldWorkflowID=$(aws cloudformation \
+                list-exports --query "Exports[?Name==\'WorkflowID\'].value" \
+                --no-paginate --output text)
             
             echo Stack names: "${STACKS[@]}"
             echo Old Workflow ID: "${OldWorkflowID}"
@@ -527,6 +528,7 @@ jobs:
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
 
+#export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
       # export OldWorkflowID=$(aws cloudformation \
           # --list-exports --query "Exports[?Name==\'WorkflowID\'].value" \
           # --no-paginate --output text)
