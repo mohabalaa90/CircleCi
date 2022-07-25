@@ -90,7 +90,7 @@ commands:
             then
               cd ~/project/backend
               npm install
-              
+              npm run migration:revert
             fi
 # npm run migration:revert
 
@@ -282,6 +282,7 @@ jobs:
   run-migrations:
     docker:
       - image: cimg/node:13.8.0
+      # - image: cimg/node:16.16.0
     steps:
       - checkout
       - install_awscli
@@ -289,8 +290,10 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            npm install
-            
+            sudo npm install
+            npm audit fix --audit-level=critical --force
+            npm run build
+            sudo npm run migrations > migrations_dump.txt
       - run:
           name: Send migration status to kvdb.io
           command: |
@@ -300,6 +303,7 @@ jobs:
             fi
       - destroy_environment
       - revert-migrations
+
 
 
       # npm update path-parse --depth 3
@@ -383,7 +387,7 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
 
-            export API_URL="http://${BACKEND_PUBLIC_IP}:3030" >> frontend/.env
+            export API_URL="http://$BACKEND_PUBLIC_IP:3030" >> frontend/.env
             cat frontend/.env
       - run:
           name: Deploy frontend objects
@@ -414,7 +418,7 @@ jobs:
             cd backend
             npm install
       - run:
-          name: Deploy backend
+          name: Package backend
           command: |
             cd backend
             npm run build
