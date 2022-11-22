@@ -146,6 +146,7 @@ jobs:
             cd frontend
             npm install 
             npm test
+            npm audit fix
       # - notify_on_failure
 
 
